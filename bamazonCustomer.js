@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("Connected as id " + connection.threadId)
+    console.log("Welcome to bamazon!  We appreciate your business.  Please see the following list of available items:");
     displayItems();
     buyItem();
 });
@@ -23,12 +23,12 @@ function displayItems() {
     connection.query("SELECT * FROM bamazon.products", function (err, response) {
         if (err) throw err;
 
-        for (var i = 0; i < response.length; i++) {
-            console.table(response[i].item_id + " | " + response[i].product_name + " | " + response[i].price)
-        }
-        console.log("------------------------");
+        console.log("--------------------------------------------------");
 
-        // connection.end();
+        for (var i = 0; i < response.length; i++) {
+            console.table(response[i].item_id + " | " + response[i].product_name + " | $" + response[i].price)
+        }
+        console.log("--------------------------------------------------");
     });
 }
 
@@ -64,7 +64,7 @@ function buyItem() {
                     }
                 }
 
-                if (chosenItem.stock_quantity > parseInt(answer.quantity) || chosenItem.stock_quantity >= 0) {
+                if (chosenItem.stock_quantity > parseInt(answer.quantity) || (chosenItem.stock_quantity - parseInt(answer.quantity)) >= 0) {
                     connection.query("UPDATE products SET ? WHERE ?",
                         [
                             {
@@ -101,7 +101,7 @@ function buyItem() {
                     );
                 }
                 else {
-                    console.log("Insufficient quantities available, please reduce your quantity or select a new item.")
+                    console.log("Insufficient quantities available. We have " + chosenItem.stock_quantity + " of " + chosenItem.product_name + " currently available. Please reduce your quantity or select a new item.")
                     inquirer.prompt([
                         {
                             type: "confirm",
@@ -110,7 +110,7 @@ function buyItem() {
                             default: true
                         }
                     ])
-                    then(function (answer) {
+                    .then(function (answer) {
                         if (answer.confirm) {
                             displayItems();
                             buyItem();
