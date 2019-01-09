@@ -23,12 +23,20 @@ function displayItems() {
     connection.query("SELECT * FROM bamazon.products", function (err, response) {
         if (err) throw err;
 
-        console.log("--------------------------------------------------");
+        let displayTable = {};
 
         for (var i = 0; i < response.length; i++) {
-            console.table(response[i].item_id + " | " + response[i].product_name + " | $" + response[i].price)
+
+            const responseItem = response[i];
+
+            displayTable[responseItem.item_id] = {
+            // item: responseItem.item_id,
+            product: responseItem.product_name,
+            price: responseItem.price,
+            }
+            
         }
-        console.log("--------------------------------------------------");
+        console.table(displayTable);
     });
 }
 
@@ -42,7 +50,7 @@ function buyItem() {
             {
                 name: "item",
                 type: "input",
-                message: "What is the item you would like to buy (enter ID number to the left)?"
+                message: "What is the item you would like to buy (enter the (index) number to the left)?"
             },
             {
                 name: "quantity",
