@@ -4,10 +4,10 @@
 Bamazon is CLI Amazon-like storefront app built with:
 * Node.js
 * MySQL
-* dotenv
 * npm Packages
     1. inquirer
     1. mysql
+    1. dotenv
 
 
 The app welcomes the customer and displays the available products with pricing.  The customer is prompted to enter the desired product by Item ID and is then asked how many they wish to purchase.  
