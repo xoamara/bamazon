@@ -16,6 +16,19 @@ Once the quantity is entered the customer is given the total of their purchase a
 
 All quantities are deducted on the back end within MySQL.  The logic allows a customer to buy the maximum quantity without dropping below zero.  If the desired quantity would drop inventory below zero a message informs the customer the max quantity available.  The customer has the option to revise the quantity or buy something else.
 
+## Installation
+
+Create a .env file to store your personal MySQL key.  Put the following in to the file putting your personal password after the "=".
+
+```
+# MySQL Key
+
+PASSWORD=your_password
+```
+After downloading run the following at the command line:
+
+`npm install`
+
 ## Usage
 
 To initiate the application type the following in the command line:
